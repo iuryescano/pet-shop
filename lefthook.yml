@@ -4,7 +4,7 @@ pre-commit:
       run: yarn format {staged_files}
       glob: '*.{js, jsx, .mjs,ts,tsx,css,json,md}'
       stage_fixed: true
-    
+
 pre-push:
   commands:
     validate:
