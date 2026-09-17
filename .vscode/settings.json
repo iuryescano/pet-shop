@@ -6,5 +6,9 @@
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "yarn install": true,
+    "yarn dlx": true
   }
 }
