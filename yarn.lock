@@ -327,6 +327,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime-corejs3@npm:^7.24.4":
+  version: 7.29.7
+  resolution: "@babel/runtime-corejs3@npm:7.29.7"
+  dependencies:
+    core-js-pure: ^3.48.0
+  checksum: 634b2fb104084ccc62d25b3a64be5fbfa683aeea2dd4bc33ce4eac257a145743363864886f76399ddda467645ee29f33c87124ec95cffbf2b2fba7cf7f0357e1
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.29.2":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
@@ -3196,6 +3205,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js-pure@npm:^3.48.0":
+  version: 3.50.0
+  resolution: "core-js-pure@npm:3.50.0"
+  checksum: 8ab790a41bee405ccc273bcf22212abe3f3c0e1500613f40a154027c8189596dd7c2aaa9bee8ffee2e54210e93f777d41503c3c9b8e4ad0986f779b380c4be86
+  languageName: node
+  linkType: hard
+
 "core-js@npm:^2.0.0, core-js@npm:^2.4.0":
   version: 2.6.12
   resolution: "core-js@npm:2.6.12"
@@ -4864,6 +4880,15 @@ __metadata:
   version: 7.0.5
   resolution: "ignore@npm:7.0.5"
   checksum: d0862bf64d3d58bf34d5fb0a9f725bec9ca5ce8cd1aecc8f28034269e8f69b8009ffd79ca3eda96962a6a444687781cd5efdb8c7c8ddc0a6996e36d31c217f14
+  languageName: node
+  linkType: hard
+
+"imask@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "imask@npm:7.6.1"
+  dependencies:
+    "@babel/runtime-corejs3": ^7.24.4
+  checksum: 7f8041457ab3a479e7f8799243164219a24c3438cbf69810ea8fcb942c8f4094a91b650d9ad32dc37943658e2cfebd1663be504f67e96d389b4285cad21dca04
   languageName: node
   linkType: hard
 
@@ -6604,6 +6629,7 @@ __metadata:
     react: 19.2.4
     react-dom: 19.2.4
     react-hook-form: ^7.88.0
+    react-imask: ^7.6.1
     shadcn: latest
     sooner: ^1.1.4
     tailwind-merge: ^3.6.0
@@ -6892,6 +6918,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: fde07e39aecfe20b2a5c539e49a8f40594240b7c594788b82e77331d9989842f077b02efcfa43760eaa54fb4e75e35133587144217fbb47af6fafee7013b7993
+  languageName: node
+  linkType: hard
+
+"react-imask@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "react-imask@npm:7.6.1"
+  dependencies:
+    imask: ^7.6.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    react: ">=0.14.0"
+  checksum: 957fdc827db2096da4121665ad880f958a147da8e2434f93ec1edf1438c1b9cf919186a034bdde3478c28263383a84fe21061cb504ea8b978be901ea3b4a681d
   languageName: node
   linkType: hard
 

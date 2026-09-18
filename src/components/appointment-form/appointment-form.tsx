@@ -8,13 +8,22 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { z } from 'zod';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Form } from '@/components/ui/form';
+import { User, Dog, Phone } from 'lucide-react';
 
 const appointmentFormSchema = z.object({
   tutorName: z.string().min(3, 'O nome do tutor é obrigatório'),
@@ -63,68 +72,104 @@ export const AppointmentForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-4 space-y-4"
           >
-            <div className="space-y-2">
-              <label
-                htmlFor="tutorName"
-                className="text-sm font-medium text-foreground"
-              >
-                Nome do tutor
-              </label>
-              <input
-                id="tutorName"
-                type="text"
-                placeholder="Nome do tutor"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-0 placeholder:text-muted-foreground"
-                {...form.register('tutorName')}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="tutorName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-label-medium-size text-content-primary">
+                    Nome do tutor
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <User
+                        className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-content-brand"
+                        size={18}
+                      />
+                      <Input
+                        {...field}
+                        placeholder="Digite o nome do tutor"
+                        className="pl-10"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="space-y-2">
-              <label
-                htmlFor="petName"
-                className="text-sm font-medium text-foreground"
-              >
-                Nome do pet
-              </label>
-              <input
-                id="petName"
-                type="text"
-                placeholder="Nome do pet"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-0 placeholder:text-muted-foreground"
-                {...form.register('petName')}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-label-medium-size text-content-primary">
+                    Telefone
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Phone
+                        className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-content-brand"
+                        size={18}
+                      />
+                      <Input
+                        {...field}
+                        type="tel"
+                        placeholder="(00) 00000-0000"
+                        className="pl-10"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="space-y-2">
-              <label
-                htmlFor="phone"
-                className="text-sm font-medium text-foreground"
-              >
-                Telefone
-              </label>
-              <input
-                id="phone"
-                type="tel"
-                placeholder="(00) 00000-0000"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-0 placeholder:text-muted-foreground"
-                {...form.register('phone')}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="petName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-label-medium-size text-content-primary">
+                    Nome do pet
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Dog
+                        className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-content-brand"
+                        size={18}
+                      />
+                      <Input
+                        {...field}
+                        placeholder="Digite o nome do pet"
+                        className="pl-10"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="space-y-2">
-              <label
-                htmlFor="description"
-                className="text-sm font-medium text-foreground"
-              >
-                Descrição do serviço
-              </label>
-              <textarea
-                id="description"
-                placeholder="Descreva o atendimento"
-                className="min-h-24 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-0 placeholder:text-muted-foreground"
-                {...form.register('description')}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-label-medium-size text-content-primary">
+                    Descrição do serviço
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      placeholder="Digite a descrição do serviço"
+                      className="resize-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="flex justify-end">
               <Button type="submit">Salvar</Button>
