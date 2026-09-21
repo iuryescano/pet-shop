@@ -21,15 +21,37 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { z } from 'zod';
 
+import { cn } from '@/lib/utils';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User, Dog, Phone } from 'lucide-react';
+import {
+  Calendar as CalendarIcon,
+  ChevronDown,
+  Dog,
+  Phone,
+  User,
+} from 'lucide-react';
+import { format, startOfToday } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 const appointmentFormSchema = z.object({
   tutorName: z.string().min(3, 'O nome do tutor é obrigatório'),
   petName: z.string().min(3, 'O nome do pet é obrigatório'),
   phone: z.string().min(11, 'O telefone é obrigatório'),
   description: z.string().min(3, 'A descrição do serviço é obrigatória'),
+  scheduleAt: z
+    .date({
+      error: 'A data do agendamento é obrigatória',
+    })
+    .min(startOfToday(), {
+      message: 'A data do agendamento deve ser no futuro',
+    }),
 });
 
 type AppointFormValues = z.infer<typeof appointmentFormSchema>;
@@ -42,6 +64,7 @@ export const AppointmentForm = () => {
       petName: '',
       phone: '',
       description: '',
+      scheduleAt: undefined,
     },
   });
 
@@ -166,6 +189,57 @@ export const AppointmentForm = () => {
                       className="resize-none"
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="scheduleAt"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className="text-label-medium-size text-content-primary">
+                    Data do agendamento
+                  </FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger
+                        render={
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              'w-full justify-between text-left font-normal bg-background-tertiary border-border-primary text-content-primary hover:bg-background-tertiary hover:border-border-secondary hover:text-content-primary focus-visible:ring-offset-0 focus-visible:ring-1 focus-visible:ring-border-brand focus:border-border-brand focus-visible:border-border-brand'
+                            )}
+                          />
+                        }
+                      >
+                        <div className="flex items-center gap-2">
+                          <CalendarIcon
+                            className="text-content-brand"
+                            size={20}
+                          />
+                          {field.value ? (
+                            format(field.value, 'dd/MM/yyyy')
+                          ) : (
+                            <span className="text-content-primary">
+                              Selecione uma data
+                            </span>
+                          )}
+                        </div>
+                        <ChevronDown className="h-4 w-4 opacity-50" />
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) => date < startOfToday()}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
