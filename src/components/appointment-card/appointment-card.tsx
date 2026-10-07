@@ -1,5 +1,26 @@
+'use client';
+
 import { Appointment } from '@/types/appointments';
 import { cn } from '../../lib/utils';
+import { AppointmentForm } from '../appointment-form/appointment-form';
+import { Button } from '@/components/ui/button';
+import { Pen as EditIcon } from 'lucide-react';
+import { Trash as TrashIcon } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useState } from 'react';
+import { deleteAppointment } from '@/app/actions';
+import { toast } from 'sonner';
 
 type AppointmentCardProps = {
   appointment: Appointment;
@@ -10,6 +31,23 @@ export const AppointmentCard = ({
   appointment,
   isFirstInSection = false,
 }: AppointmentCardProps) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+
+    const result = await deleteAppointment(appointment.id);
+
+    if (result?.error) {
+      toast.error(result.error);
+      setIsDeleting(false);
+      return;
+    }
+
+    toast.success('Agendamento removido com sucesso!');
+    setIsDeleting(false);
+  };
+
   return (
     <div
       className={cn(
@@ -39,6 +77,45 @@ export const AppointmentCard = ({
             {appointment.description}
           </span>
         </div>
+      </div>
+
+      <div className="text-right mt-2 md:mt-0 col-span-2 md:col-span-1 flex justify-end items-center gap-2">
+        <AppointmentForm appointment={appointment}>
+          <Button variant="edit" size="icon">
+            <EditIcon size={16} />
+          </Button>
+        </AppointmentForm>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="remove" size="icon">
+              <TrashIcon size={16} />
+            </Button>
+          </AlertDialogTrigger>
+
+          <AlertDialogContent size="sm">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remover agendamento</AlertDialogTitle>
+              <AlertDialogDescription>
+                Tem certeza que deseja remover este agendamento? Esta ação não
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Removendo...
+                  </>
+                ) : (
+                  'Remover'
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
